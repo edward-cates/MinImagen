@@ -182,7 +182,7 @@ def get_minimagen_parser():
                         default=None, type=str)
     parser.add_argument("-n", "--NUM_WORKERS", dest="NUM_WORKERS", help="Number of workers for DataLoader", default=0,
                         type=int)
-    parser.add_argument("-b", "--BATCH_SIZE", dest="BATCH_SIZE", help="Batch size", default=2, type=int)
+    parser.add_argument("-b", "--BATCH_SIZE", dest="BATCH_SIZE", help="Batch size", default=1, type=int)
     parser.add_argument("-mw", "--MAX_NUM_WORDS", dest="MAX_NUM_WORDS",
                         help="Maximum number of words allowed in a caption", default=64, type=int)
     parser.add_argument("-s", "--IMG_SIDE_LEN", dest="IMG_SIDE_LEN", help="Side length of square Imagen output images",
@@ -445,7 +445,8 @@ def MinimagenTrain(timestamp, args, unets, imagen, train_dataloader, valid_datal
 
         running_train_loss = [0. for i in range(len(unets))]
         print(f'\n{"-" * 10}Training...{"-" * 10}')
-        for batch_num, batch in tqdm(enumerate(train_dataloader)):
+        for batch_num, batch in tqdm(enumerate(train_dataloader), total=len(train_dataloader)):
+            print("WTF batch_num", batch_num)
             try:
                 with _Timeout(timeout):
                     # If batch is empty, move on to the next one

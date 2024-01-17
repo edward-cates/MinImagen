@@ -156,6 +156,7 @@ class GaussianDiffusion(nn.Module):
         :return: Un-noised images. Shape (b, c, s, s).
 
         """
+        print("DEBUG: predict_start_from_noise", f"x_t.shape: {x_t.shape}")
         return (
                 extract(self.sqrt_recip_alphas_cumprod, t, x_t.shape) * x_t -
                 extract(self.sqrt_recipm1_alphas_cumprod, t, x_t.shape) * noise

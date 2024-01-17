@@ -1,3 +1,4 @@
+import json
 from typing import List, Tuple, Union, Callable, Literal
 
 import PIL
@@ -306,6 +307,11 @@ class Imagen(nn.Module):
         # Calculate the starting images from the noise
         x_start = noise_scheduler.predict_start_from_noise(x, t=t, noise=pred)
 
+        print("DEBUG: _p_mean_variance", json.dumps({
+            "unet pred_shape": pred.shape,
+            "x_start_shape": x_start.shape,
+        }, indent=2))
+
         # DYNAMIC THRESHOLDING
         #   https://www.assemblyai.com/blog/how-imagen-actually-works/#large-guidance-weight-samplers
 
@@ -338,6 +344,14 @@ class Imagen(nn.Module):
                   lowres_noise_times: torch.tensor = None,
                   cond_scale: float = 1.
                   ) -> torch.tensor:
+        print("DEBUG: _p_sample", json.dumps({
+            "x_shape": x.shape,
+            "t_shape": t.shape,
+            "text_embeds_shape": text_embeds.shape if text_embeds is not None else None,
+            "text_mask_shape": text_mask.shape if text_mask is not None else None,
+            "lowres_cond_img_shape": lowres_cond_img.shape if lowres_cond_img is not None else None,
+            "lowres_noise_times_shape": lowres_noise_times.shape if lowres_noise_times is not None else None,
+        }, indent=2))
         """
         Given a denoising Unet and noisy images, takes one step back in time in the diffusion model. I.e. given
         a noisy image x_t, `_p_sample` samples from q(x_{t-1}|x_t) to get a slightly denoised image x_{t-1}.

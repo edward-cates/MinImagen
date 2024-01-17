@@ -134,7 +134,9 @@ python inference.py -CAPTIONS captions.txt --TRAINING_DIRECTORY training_<TIMEST
 ```
 
 where `TIMESTAMP` is replaced with the appropriate value from your training.
-    
+
+Inference saves to folder called `generated_images_<TIMESTAMP>`.
+
 <br/>
 
 ## Usage - Package
