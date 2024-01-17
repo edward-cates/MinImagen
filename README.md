@@ -254,14 +254,13 @@ $ cd MinImagen
 
 After that, create a virtual environment:
 ```bash
-$ pip install virtualenv
-$ virtualenv venv
+$ # install miniconda
+$ conda create -n minimagen python=3.10
 ```
 
 Then activate the virtual environment and install all dependencies:
 ```bash
-$ .\venv\Scripts\activate.bat  # Windows
-$ source venv/bin/activate  # MacOS/Linux
+$ conda activate minimagen
 $ pip install -r requirements.txt
 ```
 
